@@ -77,5 +77,9 @@ void Parser_RadioGetSyncWord(parserCmdInfo_t* pParserCmdInfo);
 void Parser_RadioSetReg(parserCmdInfo_t* pParserCmdInfo);
 void Parser_RadioGetReg(parserCmdInfo_t* pParserCmdInfo);
 
+void Parser_RadioSetFreqCorr(parserCmdInfo_t* pParserCmdInfo);
+void Parser_RadioGetFreqCorr(parserCmdInfo_t* pParserCmdInfo);
+void Parser_RadioLoadFreqCorr(void);
+
 
 #endif /* _PARSER_RADIO_H */

@@ -160,6 +160,12 @@ uint8_t RADIO_GetCRC(void);
 void RADIO_SetIQInverted(uint8_t iqInverted);
 uint8_t RADIO_GetIQInverted(void);
 
+// Crystal error compensation in parts per billion. The correction is added to
+// every frequency written to the radio: +23000 raises it by 23 ppm (about
+// +20 kHz at 869 MHz). Range -100000..+100000 (+/-100 ppm).
+void RADIO_SetFreqCorrection(int32_t ppb);
+int32_t RADIO_GetFreqCorrection(void);
+
 void RADIO_SetBandwidth(RadioLoRaBandWidth_t bandwidth);
 RadioLoRaBandWidth_t RADIO_GetBandwidth(void);
 

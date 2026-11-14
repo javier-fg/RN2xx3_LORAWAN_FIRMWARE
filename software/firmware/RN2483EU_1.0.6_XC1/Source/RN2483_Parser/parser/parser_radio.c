@@ -42,6 +42,7 @@
 #include "parser.h"
 #include "../mcc_generated_files/LoRaWAN/radio_interface.h"
 #include "../mcc_generated_files/LoRaWAN/radio_driver_SX1276.h"
+#include "../mcc_generated_files/memory.h"
 
 static const char* gapParserRadioStatus[] =
 {
@@ -706,4 +707,94 @@ void Parser_RadioGetReg(parserCmdInfo_t* pParserCmdInfo)
     {
         pParserCmdInfo->pReplyCmd = (char*)gapParserRadioStatus[INVALID_PARAM_IDX];
     }
+}
+
+/* ---------------------------------------------------------------------------
+ * Crystal frequency correction ("radio set fcorr <ppb>", "radio get fcorr")
+ * Stored in EEPROM at 0x2F0..0x2F3 (little endian), outside the LoRaWAN
+ * parameters (0x000..0x1B4) and the user NVM area (0x300..0x3FF).
+ * Erased EEPROM (0xFFFFFFFF) means no correction.
+ * ------------------------------------------------------------------------- */
+#define FCORR_EEPROM_ADDR   0x02F0U
+#define FCORR_MAX_PPB       100000L
+
+static void Parser_RadioSaveFreqCorr(int32_t ppb)
+{
+    uint32_t value = (uint32_t)ppb;
+    uint8_t i;
+
+    for (i = 0; i < 4U; i++)
+    {
+        DATAEE_WriteByte(FCORR_EEPROM_ADDR + i, (uint8_t)(value >> (8U * i)));
+    }
+}
+
+void Parser_RadioLoadFreqCorr(void)
+{
+    uint32_t value = 0;
+    int32_t ppb;
+    uint8_t i;
+
+    for (i = 0; i < 4U; i++)
+    {
+        value |= ((uint32_t)DATAEE_ReadByte(FCORR_EEPROM_ADDR + i)) << (8U * i);
+    }
+
+    ppb = (int32_t)value;
+    if ((value == 0xFFFFFFFFUL) || (ppb < -FCORR_MAX_PPB) || (ppb > FCORR_MAX_PPB))
+    {
+        ppb = 0;    /* erased EEPROM or invalid value */
+    }
+    RADIO_SetFreqCorrection(ppb);
+}
+
+void Parser_RadioSetFreqCorr(parserCmdInfo_t* pParserCmdInfo)
+{
+    uint8_t status = INVALID_PARAM_IDX;
+    const char* pStr = pParserCmdInfo->pParam1;
+    const char* pDigits = pStr;
+    uint8_t nDigits = 0;
+    bool bValid = true;
+    int32_t ppb;
+
+    if ((*pDigits == '-') || (*pDigits == '+'))
+    {
+        pDigits++;
+    }
+    while (pDigits[nDigits] != '\0')
+    {
+        if ((pDigits[nDigits] < '0') || (pDigits[nDigits] > '9'))
+        {
+            bValid = false;
+            break;
+        }
+        nDigits++;
+    }
+
+    if (bValid && (nDigits > 0U) && (nDigits <= 6U))
+    {
+        ppb = strtol(pStr, NULL, 10);
+        if ((ppb >= -FCORR_MAX_PPB) && (ppb <= FCORR_MAX_PPB))
+        {
+            RADIO_SetFreqCorrection(ppb);
+            Parser_RadioSaveFreqCorr(ppb);
+            status = OK_STATUS_IDX;
+        }
+    }
+
+    pParserCmdInfo->pReplyCmd = (char*)gapParserRadioStatus[status];
+}
+
+void Parser_RadioGetFreqCorr(parserCmdInfo_t* pParserCmdInfo)
+{
+    int32_t ppb = RADIO_GetFreqCorrection();
+    char* pOut = (char*)aParserData;
+
+    if (ppb < 0)
+    {
+        *pOut++ = '-';
+        ppb = -ppb;
+    }
+    ultoa(pOut, (uint32_t)ppb, 10U);
+    pParserCmdInfo->pReplyCmd = (char*)aParserData;
 }

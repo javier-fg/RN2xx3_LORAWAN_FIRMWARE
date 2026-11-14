@@ -59,6 +59,7 @@
 #include "parser/parser_tsp.h"
 #include "parser/parser_system.h"
 #include "parser/parser_utils.h"
+#include "parser/parser_radio.h"
 /*
                          Main application
  */
@@ -89,6 +90,9 @@ void main(void)
     
     //initialize parser	
 	Parser_Init();
+
+    // Load the crystal frequency correction from EEPROM ("radio set fcorr")
+    Parser_RadioLoadFreqCorr();
 
     // Enable the Global Interrupts
     INTERRUPT_GlobalInterruptEnable();

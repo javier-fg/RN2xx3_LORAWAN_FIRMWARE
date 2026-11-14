@@ -186,6 +186,7 @@ static const parserCmdEntry_t maParserRadioSetCmd[] =
     {"bitrate",         NULL,   Parser_RadioSetBitrate,      0, 1},
     {"sync",         NULL,   Parser_RadioSetSyncWord,      0, 1},
     {"reg",         NULL,   Parser_RadioSetReg,      0, 2},
+    {"fcorr",       NULL,   Parser_RadioSetFreqCorr,  0, 1},
 
 };
 #define mParserRadioSetCmdSize (sizeof(maParserRadioSetCmd) / sizeof(maParserRadioSetCmd[0]))
@@ -211,6 +212,7 @@ static const parserCmdEntry_t maParserRadioGetCmd[] =
     {"rssi",         NULL,   Parser_RadioGetRSSI,      0, 0},
     {"snr",         NULL,   Parser_RadioGetSnr,      0, 0},
     {"reg",         NULL,   Parser_RadioGetReg,      0, 1},
+    {"fcorr",       NULL,   Parser_RadioGetFreqCorr,  0, 0},
 };
 #define mParserRadioGetCmdSize (sizeof(maParserRadioGetCmd) / sizeof(maParserRadioGetCmd[0]))
 

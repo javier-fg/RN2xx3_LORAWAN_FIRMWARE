@@ -709,7 +709,23 @@ uint8_t LORAWAN_GetLinkCheckGwCnt (void)
  It will return how much time other transmissions can occur*/
 uint32_t LORAWAN_Pause (void)
 {
-    uint32_t timeToPause;
+    uint32_t timeToPause = 0;
+
+    // Radio-only use: when the device is neither joined nor joining, no MAC
+    // activity can be pending. A 'radio tx' sent while the MAC was not paused
+    // leaves the MAC in BEFORE_RX1/RX windows, which made 'mac pause' return 0
+    // (timeToPause was never assigned for that case) and let the RX2 window
+    // reconfigure the radio. Cancel the windows and allow an unlimited pause.
+    if ((loRa.macStatus.networkJoined == DISABLED) && (loRa.lorawanMacStatus.joining == DISABLED))
+    {
+        SwTimerStop(loRa.receiveWindow1TimerId);
+        SwTimerStop(loRa.receiveWindow2TimerId);
+        if ((RADIO_GetStatus() & RADIO_FLAG_RECEIVING) != 0)
+        {
+            RADIO_ReceiveStop();
+        }
+        loRa.macStatus.macState = IDLE;
+    }
 
     switch (loRa.macStatus.macState)
     {

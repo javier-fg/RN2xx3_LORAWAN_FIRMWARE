@@ -256,10 +256,32 @@ static void RADIO_Reset(void)
     HALResetPinMakeOutput();
 }
 
+// Crystal error compensation, parts per billion (0 = none)
+static int32_t freqCorrectionPpb = 0;
+
+void RADIO_SetFreqCorrection(int32_t ppb)
+{
+    freqCorrectionPpb = ppb;
+}
+
+int32_t RADIO_GetFreqCorrection(void)
+{
+    return freqCorrectionPpb;
+}
+
 // The math in this function needs adjusting for FXOSC != 32MHz
 static void RADIO_WriteFrequency(uint32_t frequency)
 {
     uint32_t num, num_mod;
+    int32_t offset;
+
+    // Apply the crystal correction: offset = frequency * ppb / 1e9, computed as
+    // (frequency / 1e5) * ppb / 1e4 so it fits in 32 bits for |ppb| <= 100000
+    if (0 != freqCorrectionPpb)
+    {
+        offset = ((int32_t)(frequency / 100000UL) * freqCorrectionPpb) / 10000L;
+        frequency = (uint32_t)((int32_t)frequency + offset);
+    }
 
     // Frf = (Fxosc * num) / 2^19
     // We take advantage of the fact that 32MHz = 15625Hz * 2^11

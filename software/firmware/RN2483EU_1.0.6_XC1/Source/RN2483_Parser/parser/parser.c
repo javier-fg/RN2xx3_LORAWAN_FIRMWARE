@@ -43,7 +43,7 @@
 #include "parser_utils.h"
 #include "../mcc_generated_files/eusart1.h"
 
-#define VER_STR            "1.0.6 XC1.02"
+#define VER_STR            "1.0.6 XC1.04"
 #define HW_STR             "RN2483"
 
 typedef struct parserRxCmd_tag
