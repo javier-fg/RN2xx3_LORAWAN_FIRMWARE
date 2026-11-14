@@ -1,3 +1,29 @@
+# FORK - RN2xx3 LoRaWAN Firmware
+
+> This is a fork of [MicrochipTech/RN2xx3_LORAWAN_FIRMWARE](https://github.com/MicrochipTech/RN2xx3_LORAWAN_FIRMWARE).
+> The original README follows below.
+
+## What this fork adds
+
+New firmware version **RN2483 EU 1.0.6 XC1**, based on 1.0.6 RC4, in
+[`software/firmware/RN2483EU_1.0.6_XC1`](software/firmware/RN2483EU_1.0.6_XC1):
+
+- Builds with **MPLAB X 6.20 and XC8 v4.00** (C99)
+- **62.5 kHz LoRa bandwidth** (MeshCore EU/UK narrow)
+- Fix for interrupt handlers and software timers under XC8 v4
+- `radio set/get fcorr`: crystal frequency correction stored in EEPROM
+- `mac pause` fix for radio-only use
+- Python tools: UART bootloader upload and a MeshCore/Meshtastic receiver
+
+The original Microchip firmware folders are unchanged. See the
+[README of the new version](software/firmware/RN2483EU_1.0.6_XC1/README.md)
+for details, build and programming instructions.
+
+**Status:** tested as a raw LoRa radio (MeshCore reception, transmission).
+LoRaWAN join/uplink has not been re-tested after the compiler port.
+
+---
+
 # RN2xx3_LORAWAN_FIRMWARE
 <img src="resources/media/IoT-Made-Easy-Logo.png" width=100>
 
