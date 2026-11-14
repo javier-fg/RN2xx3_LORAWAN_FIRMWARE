@@ -76,7 +76,8 @@ typedef enum
 
 typedef enum
 {
-    BW_125KHZ = 7,
+    BW_62_5KHZ = 6,     // SX1276 RegModemConfig1 BW code 0110
+    BW_125KHZ,          // 7
     BW_250KHZ,
     BW_500KHZ,
 } RadioLoRaBandWidth_t;

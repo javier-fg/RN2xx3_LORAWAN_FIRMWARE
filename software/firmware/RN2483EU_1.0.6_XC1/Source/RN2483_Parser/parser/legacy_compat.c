@@ -5,7 +5,7 @@
  * See legacy_compat.h.
  */
 #include <stdint.h>
-#include <ctype.h>
+
 #include "legacy_compat.h"
 
 /* Convert an unsigned long to text in the given base (2..16).
@@ -70,7 +70,7 @@ unsigned int xtoi(const char *s)
     unsigned int result = 0U;
     char c;
 
-    while (isspace((unsigned char)*s))
+    while ((*s == ' ') || (*s == '\t'))
     {
         s++;
     }
@@ -98,6 +98,19 @@ unsigned int xtoi(const char *s)
     return result;
 }
 
+/* ASCII lower-case conversion as a real function.
+ * Do NOT use the <ctype.h> tolower() here: in the XC8 C99 library it can be
+ * a macro that evaluates its argument more than once, which breaks
+ * expressions such as tolower(*p++). */
+static unsigned char ascii_lower(unsigned char c)
+{
+    if ((c >= 'A') && (c <= 'Z'))
+    {
+        c = (unsigned char)(c + ('a' - 'A'));
+    }
+    return c;
+}
+
 /* Case-insensitive string compare. */
 int stricmp(const char *s1, const char *s2)
 {
@@ -106,8 +119,10 @@ int stricmp(const char *s1, const char *s2)
 
     do
     {
-        c1 = (unsigned char)tolower((unsigned char)*s1++);
-        c2 = (unsigned char)tolower((unsigned char)*s2++);
+        c1 = ascii_lower((unsigned char)*s1);
+        c2 = ascii_lower((unsigned char)*s2);
+        s1++;
+        s2++;
         if (c1 != c2)
         {
             return (int)c1 - (int)c2;

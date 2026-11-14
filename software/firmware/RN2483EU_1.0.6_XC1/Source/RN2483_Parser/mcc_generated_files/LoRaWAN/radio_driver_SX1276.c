@@ -561,6 +561,9 @@ static void RADIO_WriteConfiguration(uint16_t symbolTimeout)
             // Multiply by BW/1000 (since period is in ms)
             switch (RadioConfiguration.bandWidth)
             {
+                case BW_62_5KHZ:
+                    tempValue = (tempValue * 125) >> 1;    // * 62.5
+                    break;
                 case BW_125KHZ:
                     tempValue *= 125;
                     break;
@@ -589,9 +592,13 @@ static void RADIO_WriteConfiguration(uint16_t symbolTimeout)
         // If the symbol time is > 16ms, LowDataRateOptimize needs to be set
         // This long symbol time only happens for SF12&BW125, SF12&BW250
         // and SF11&BW125 and the following if statement checks for these
-        // conditions
+        // conditions. With BW62.5 the symbol time is > 16ms for SF10-SF12.
         regValue = RADIO_RegisterRead(REG_LORA_MODEMCONFIG3);
         if (
+            (
+             (BW_62_5KHZ == RadioConfiguration.bandWidth) &&
+             (RadioConfiguration.dataRate >= SF_10)
+            ) ||
             (
              (SF_12 == RadioConfiguration.dataRate) &&
              ((BW_125KHZ == RadioConfiguration.bandWidth) || (BW_250KHZ == RadioConfiguration.bandWidth))
@@ -624,7 +631,9 @@ static void RADIO_WriteConfiguration(uint16_t symbolTimeout)
         {
             // Chip already is in sleep mode. For these BWs we don't need to
             // offset Frf
-            if ( (BW_125KHZ == RadioConfiguration.bandWidth) ||
+            // BW62.5 uses the same register values (0x2F = 0x40, 0x30 = 0x00)
+            if ( (BW_62_5KHZ == RadioConfiguration.bandWidth) ||
+                 (BW_125KHZ == RadioConfiguration.bandWidth) ||
                  (BW_250KHZ == RadioConfiguration.bandWidth) )
             {
                 regValue = RADIO_RegisterRead(0x31);

@@ -75,6 +75,7 @@ static const char* gapParseRadioOnOff[] =
 
 static const char* gaParserRadioBw[] =
 {
+    "62.5",
     "125",
     "250",
     "500",
@@ -271,8 +272,8 @@ void Parser_RadioSetBw(parserCmdInfo_t* pParserCmdInfo)
     {
         if(0 == stricmp(pParam1, gaParserRadioBw[iCtr]))
         {
-            //125khz = 7
-            RADIO_SetBandwidth(iCtr + 7);
+            //62.5khz = 6 (first table entry)
+            RADIO_SetBandwidth(iCtr + BW_62_5KHZ);
             status = OK_STATUS_IDX;
             break;
         }
@@ -283,8 +284,8 @@ void Parser_RadioSetBw(parserCmdInfo_t* pParserCmdInfo)
 
 void Parser_RadioGetBw(parserCmdInfo_t* pParserCmdInfo)
 {
-    //125khz = 7
-    pParserCmdInfo->pReplyCmd = (char*)gaParserRadioBw[RADIO_GetBandwidth() - 7];
+    //62.5khz = 6 (first table entry)
+    pParserCmdInfo->pReplyCmd = (char*)gaParserRadioBw[RADIO_GetBandwidth() - BW_62_5KHZ];
 }
 
 void Parser_RadioSetIqInverted(parserCmdInfo_t* pParserCmdInfo)
