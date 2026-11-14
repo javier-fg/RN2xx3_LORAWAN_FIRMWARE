@@ -628,7 +628,7 @@ void INT1_CallBack(void);
     INT1_SetInterruptHandler(MyInterruptHandler);
 
 */
-void INT1_SetInterruptHandler(void* InterruptHandler);
+void INT1_SetInterruptHandler(void (* InterruptHandler)(void));
 
 /**
   @Summary
@@ -741,7 +741,7 @@ void INT2_CallBack(void);
     INT2_SetInterruptHandler(MyInterruptHandler);
 
 */
-void INT2_SetInterruptHandler(void* InterruptHandler);
+void INT2_SetInterruptHandler(void (* InterruptHandler)(void));
 
 /**
   @Summary
@@ -854,7 +854,7 @@ void INT0_CallBack(void);
     INT0_SetInterruptHandler(MyInterruptHandler);
 
 */
-void INT0_SetInterruptHandler(void* InterruptHandler);
+void INT0_SetInterruptHandler(void (* InterruptHandler)(void));
 
 /**
   @Summary

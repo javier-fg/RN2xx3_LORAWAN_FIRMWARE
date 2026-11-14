@@ -526,7 +526,7 @@ void IOCB4_ISR(void);
     IOCB4_SetInterruptHandler(MyInterruptHandler);
 
 */
-void IOCB4_SetInterruptHandler(void* InterruptHandler);
+void IOCB4_SetInterruptHandler(void (* InterruptHandler)(void));
 
 /**
   @Summary
@@ -610,7 +610,7 @@ void IOCB5_ISR(void);
     IOCB5_SetInterruptHandler(MyInterruptHandler);
 
 */
-void IOCB5_SetInterruptHandler(void* InterruptHandler);
+void IOCB5_SetInterruptHandler(void (* InterruptHandler)(void));
 
 /**
   @Summary

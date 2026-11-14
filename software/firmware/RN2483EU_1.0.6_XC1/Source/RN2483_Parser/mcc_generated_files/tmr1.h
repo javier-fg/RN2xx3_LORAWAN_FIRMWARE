@@ -379,7 +379,7 @@ void TMR1_CallBack(void);
   @Returns
     None
 */
- void TMR1_SetInterruptHandler(void *InterruptHandler);
+ void TMR1_SetInterruptHandler(void (* InterruptHandler)(void));
 
 /**
   @Summary

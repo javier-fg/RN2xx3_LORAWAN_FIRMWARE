@@ -69,7 +69,7 @@ void INT1_CallBack(void)
 /**
   Allows selecting an interrupt handler for EXT_INT1 - INT1 at application runtime
 */
-void INT1_SetInterruptHandler(void* InterruptHandler){
+void INT1_SetInterruptHandler(void (* InterruptHandler)(void)){
     INT1_InterruptHandler = InterruptHandler;
 }
 
@@ -110,7 +110,7 @@ void INT2_CallBack(void)
 /**
   Allows selecting an interrupt handler for EXT_INT2 - INT2 at application runtime
 */
-void INT2_SetInterruptHandler(void* InterruptHandler){
+void INT2_SetInterruptHandler(void (* InterruptHandler)(void)){
     INT2_InterruptHandler = InterruptHandler;
 }
 
@@ -151,7 +151,7 @@ void INT0_CallBack(void)
 /**
   Allows selecting an interrupt handler for EXT_INT0 - INT0 at application runtime
 */
-void INT0_SetInterruptHandler(void* InterruptHandler){
+void INT0_SetInterruptHandler(void (* InterruptHandler)(void)){
     INT0_InterruptHandler = InterruptHandler;
 }
 

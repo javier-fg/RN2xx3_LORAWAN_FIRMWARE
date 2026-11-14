@@ -180,7 +180,7 @@ void TMR1_CallBack(void)
     }
 }
 
-void TMR1_SetInterruptHandler(void* InterruptHandler){
+void TMR1_SetInterruptHandler(void (* InterruptHandler)(void)){
     TMR1_InterruptHandler = InterruptHandler;
 }
 

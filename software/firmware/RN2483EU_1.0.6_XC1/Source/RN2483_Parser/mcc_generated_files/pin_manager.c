@@ -138,7 +138,7 @@ void IOCB4_ISR(void) {
 /**
   Allows selecting an interrupt handler for IOCB4 at application runtime
 */
-void IOCB4_SetInterruptHandler(void* InterruptHandler){
+void IOCB4_SetInterruptHandler(void (* InterruptHandler)(void)){
     IOCB4_InterruptHandler = InterruptHandler;
 }
 
@@ -167,7 +167,7 @@ void IOCB5_ISR(void) {
 /**
   Allows selecting an interrupt handler for IOCB5 at application runtime
 */
-void IOCB5_SetInterruptHandler(void* InterruptHandler){
+void IOCB5_SetInterruptHandler(void (* InterruptHandler)(void)){
     IOCB5_InterruptHandler = InterruptHandler;
 }
 
