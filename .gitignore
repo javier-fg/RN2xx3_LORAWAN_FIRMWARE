@@ -1,0 +1,80 @@
+# =========================================================
+# MPLAB X IDE / XC8 projects
+# (patterns are unanchored so they apply to every project
+#  in the repository, e.g. software/firmware/*/Source/*)
+# =========================================================
+
+# Build output (objects, .p1, .d, .lst, .map, .elf, .hex, ...)
+build/
+dist/
+debug/
+disassembly/
+
+# Per-user / per-machine IDE state
+**/nbproject/private/
+**/nbproject/*.bak
+
+# Makefiles and scripts that MPLAB X regenerates when the
+# project is opened (keep nbproject/project.xml,
+# nbproject/configurations.xml and the top-level Makefile)
+**/nbproject/Makefile-*.mk
+**/nbproject/Makefile-genesis.properties
+**/nbproject/Package-*.bash
+
+# Compiler/debugger leftovers outside build/ and dist/
+*.p1
+*.d
+*.pre
+*.i
+*.o
+*.obj
+*.sdb
+*.sym
+*.cmf
+*.hxl
+*.rlf
+*.mum
+*.cof
+*.elf
+funclist
+*.lst
+*.map
+
+# MCC backup copies
+*.mc3.bak
+
+# Legacy MPLAB 8 workspace files
+*.mcw
+*.mcs
+*.mptags
+*.tagsrc
+
+# =========================================================
+# Editors and temporary files
+# =========================================================
+*.bak
+*.orig
+*.rej
+*.tmp
+*~
+.vscode/
+.idea/
+
+# =========================================================
+# Operating system files
+# =========================================================
+Thumbs.db
+ehthumbs.db
+desktop.ini
+$RECYCLE.BIN/
+.DS_Store
+._*
+
+# =========================================================
+# Nextcloud / ownCloud sync client files
+# =========================================================
+.sync_*.db*
+._sync_*.db*
+.owncloudsync.log*
+.nextcloudsync.log*
+.sync-exclude.lst
