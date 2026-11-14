@@ -40,6 +40,7 @@
 #include "parser.h"
 #include "parser_utils.h"
 #include "parser_tsp.h"
+#include "legacy_compat.h"
 #include "../system/system_low_power.h"
 #include "../mcc_generated_files/mcc.h"
 #include "../system/system.h"

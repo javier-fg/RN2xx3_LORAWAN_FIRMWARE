@@ -38,6 +38,7 @@
 #include <ctype.h>
 #include "parser_radio.h"
 #include "parser_utils.h"
+#include "legacy_compat.h"
 #include "parser.h"
 #include "../mcc_generated_files/LoRaWAN/radio_interface.h"
 #include "../mcc_generated_files/LoRaWAN/radio_driver_SX1276.h"

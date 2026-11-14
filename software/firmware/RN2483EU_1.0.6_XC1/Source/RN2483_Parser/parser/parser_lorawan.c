@@ -39,6 +39,7 @@
 #include "parser_private.h"
 #include "parser_tsp.h"
 #include "parser_utils.h"
+#include "legacy_compat.h"
 #include "../mcc_generated_files/LoRaWAN/lorawan.h"
 #include "../mcc_generated_files/memory.h"
 #include "../system/system.h"

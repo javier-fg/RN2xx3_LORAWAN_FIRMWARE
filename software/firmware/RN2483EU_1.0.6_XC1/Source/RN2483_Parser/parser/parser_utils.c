@@ -36,6 +36,7 @@
 #include <ctype.h>
 
 #include "parser_utils.h"
+#include "legacy_compat.h"
 
 // 0 = false;
 // 1 = true;
